@@ -1,0 +1,358 @@
+:root{
+  --bg: #06090b;
+  --panel: rgba(8, 18, 14, 0.55);
+  --grid: rgba(105, 255, 170, 0.22);
+  --grid-strong: rgba(105, 255, 170, 0.35);
+  --glow: rgba(105, 255, 170, 0.9);
+  --text: rgba(230, 255, 245, 0.92);
+  --muted: rgba(230, 255, 245, 0.65);
+}
+
+*{ box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+a { color: inherit; }
+
+.hero{
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+#radar{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: radial-gradient(ellipse at center, rgba(10, 28, 20, 0.85) 0%, rgba(6, 9, 11, 1) 70%);
+}
+
+.hud{
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  padding: 22px;
+  pointer-events: none;
+}
+
+.brand{
+  display: inline-block;
+  padding: 14px 16px;
+  border: 1px solid rgba(105,255,170,0.25);
+  background: var(--panel);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 30px rgba(105,255,170,0.08);
+}
+
+.brand__title{
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.brand__sub{
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.hint{
+  position: absolute;
+  right: 22px;
+  top: 22px;
+  padding: 10px 12px;
+  border: 1px solid rgba(105,255,170,0.18);
+  background: var(--panel);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.tooltip{
+  position: absolute;
+  min-width: 120px;
+  padding: 10px 12px;
+  border: 1px solid rgba(105,255,170,0.28);
+  background: rgba(5, 18, 12, 0.85);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 13px;
+  transform: translate(12px, 12px);
+  box-shadow: 0 0 28px rgba(105,255,170,0.12);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.tooltip.show{ opacity: 1; }
+
+/* PANEL */
+.panel{
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 10, 8, 0.96);
+  backdrop-filter: blur(14px);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(20px);
+  opacity: 1;
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+
+.panel.hidden{
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(40px);
+}
+
+.panel__close{
+  align-self: flex-end;
+  margin: 20px;
+  background: none;
+  border: 1px solid rgba(105,255,170,0.3);
+  color: rgba(105,255,170,0.9);
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.panel__content{
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  color: rgba(230,255,245,0.9);
+}
+
+.panel__intro{
+  max-width: 620px;
+  margin-bottom: 32px;
+  color: rgba(230,255,245,0.7);
+}
+
+/* Links inside panel */
+.support-link{
+  color: rgba(105,255,170,0.95);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(105,255,170,0.35);
+  padding-bottom: 1px;
+}
+.support-link:hover{
+  border-bottom-color: rgba(105,255,170,0.7);
+}
+
+/* FORM */
+.interest-form{
+  max-width: 420px;
+  display: grid;
+  gap: 22px;
+}
+
+.field{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label{
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(230,255,245,0.8);
+}
+
+.field input{
+  appearance: none;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(105,255,170,0.25);
+  background: rgba(8, 18, 14, 0.6);
+  color: rgba(230,255,245,0.95);
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input::placeholder{
+  color: rgba(230,255,245,0.4);
+}
+
+.field input:focus{
+  border-color: rgba(105,255,170,0.55);
+  box-shadow: 0 0 0 4px rgba(105,255,170,0.15);
+}
+
+.cta-btn{
+  margin-top: 12px;
+  align-self: flex-start;
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(105,255,170,0.45);
+  background: linear-gradient(180deg, rgba(105,255,170,0.25), rgba(105,255,170,0.1));
+  color: rgba(230,255,245,0.95);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cta-btn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(105,255,170,0.25);
+}
+
+.cta-btn:active{
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.form-status{
+  font-size: 13px;
+  color: rgba(230,255,245,0.6);
+}
+
+/* THANK YOU VIEW */
+.thanks{
+  max-width: 560px;
+}
+
+.thanks__card{
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(105,255,170,0.18);
+  background: rgba(8, 18, 14, 0.35);
+  display: grid;
+  gap: 10px;
+  color: rgba(230,255,245,0.85);
+}
+
+.thanks__actions{
+  margin-top: 22px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-secondary{
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(105,255,170,0.28);
+  background: rgba(105,255,170,0.07);
+  color: rgba(230,255,245,0.9);
+  cursor: pointer;
+}
+
+/* ---------- Responsive layout helpers ---------- */
+
+/* Make the overlay content always fit small screens nicely */
+.panel__content{
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* Ensure forms/cards never overflow */
+.interest-form,
+.thanks{
+  width: 100%;
+  max-width: 520px;
+}
+
+.thanks__card{
+  width: 100%;
+}
+
+/* Prevent long emails from overflowing */
+.thanks__card div{
+  overflow-wrap: anywhere;
+}
+
+/* Buttons wrap nicely on small screens */
+.thanks__actions{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Make canvas fill viewport reliably */
+.hero{
+  min-height: 100vh;
+  min-height: 100svh; /* better on mobile */
+}
+
+/* ---------- Mobile tweaks ---------- */
+@media (max-width: 600px){
+  .hud{
+    padding: 14px;
+  }
+
+  .brand{
+    padding: 12px 12px;
+    border-radius: 12px;
+  }
+
+  .brand__title{
+    font-size: 12px;
+    letter-spacing: 0.16em;
+  }
+
+  .brand__sub{
+    font-size: 11px;
+  }
+
+  .hint{
+    right: 14px;
+    top: 14px;
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .panel__content{
+    padding: 72px 16px 28px; /* more top space for close button */
+  }
+
+  .panel__close{
+    margin: 14px;
+  }
+
+  h1{
+    font-size: 34px;
+    line-height: 1.1;
+  }
+
+  .panel__intro{
+    margin-bottom: 20px;
+  }
+
+  .interest-form{
+    gap: 16px;
+  }
+
+  .field input{
+    font-size: 16px; /* prevents iOS zoom on focus */
+    padding: 13px 14px;
+  }
+
+  .cta-btn,
+  .btn-secondary{
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .panel{
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
